@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>CradleP2</name>
+	<name>CradleP2NoSVN</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/niveis/nivel1.txt</name>
-			<type>1</type>
-			<locationURI>PROJECT_LOC/bin/niveis/nivel1.txt</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

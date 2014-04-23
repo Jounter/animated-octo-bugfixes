@@ -4,28 +4,23 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Graphics;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import pt.ipleiria.estg.dei.gridpanel.GridPanel;
-import javax.swing.JButton;
 
 import model.Jogo;
-import model.PainelPrincipal;
-import model.PainelVida;
 
 public class JanelaCradle extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblPontuacao;
 	private GridPanel gridPainelPrincipal;
-	private JPanel jPanePainelBonus;
+	private GridPanel gridPainelBonus;
 	private JPanel jPanePainelVida;
 	private Thread novaThread;
 	private Jogo jogo;
@@ -85,13 +80,18 @@ public class JanelaCradle extends JFrame {
 		gridPainelPrincipal = new GridPanel();
 		gridPainelPrincipal.setRowSize(40);
 		gridPainelPrincipal.setColumnSize(40);
-		gridPainelPrincipal.setShowGridLines(true);
+		gridPainelPrincipal.setShowGridLines(false);
 		gridPainelPrincipal.setColumns(18);
 		contentPane.add(gridPainelPrincipal, BorderLayout.CENTER);
 		
 		//Painel Bonus
-		jPanePainelBonus = new JPanel();
-		contentPane.add(jPanePainelBonus, BorderLayout.SOUTH);
+		gridPainelBonus = new GridPanel();
+		gridPainelBonus.setRows(1);
+		gridPainelBonus.setRowSize(80);
+		gridPainelBonus.setColumnSize(80);
+		gridPainelBonus.setShowGridLines(false);
+		gridPainelBonus.setColumns(2);
+		contentPane.add(gridPainelBonus, BorderLayout.SOUTH);
 		
 		//PainelVida
 		jPanePainelVida = new JPanel() {
@@ -108,9 +108,8 @@ public class JanelaCradle extends JFrame {
 		jPanePainelVida.setPreferredSize(new Dimension(200, 10));
 		jPanePainelVida.setOpaque(false);
 		contentPane.add(jPanePainelVida, BorderLayout.EAST);
-		
 
-		jogo = new Jogo(gridPainelPrincipal, jPanePainelBonus, jPanePainelVida);
+		jogo = new Jogo(gridPainelPrincipal, gridPainelBonus, jPanePainelVida);
 
 		novaThread = new Thread() {
 			public void run() {
@@ -119,7 +118,7 @@ public class JanelaCradle extends JFrame {
 						jogo.iterar();
 						sleep(1000);
 						gridPainelPrincipal.repaint();
-						jPanePainelBonus.repaint();
+						gridPainelBonus.repaint();
 						jPanePainelVida.repaint();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block

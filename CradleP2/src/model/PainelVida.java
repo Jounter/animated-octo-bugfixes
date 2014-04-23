@@ -27,8 +27,12 @@ public class PainelVida extends Iteravel {
 }
 	
 	public int getNivelVida(){
+		if(nivelVida > 0){
 		int nivelVidaAux = nivelVida;
 		nivelVida = nivelVidaAux - 1;
+		}else {
+			nivelVida = 0;
+		}
 		return nivelVida;
 	}
 }
