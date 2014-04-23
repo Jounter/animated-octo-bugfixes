@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/niveis/nivel1.txt</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/bin/niveis/nivel1.txt</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
