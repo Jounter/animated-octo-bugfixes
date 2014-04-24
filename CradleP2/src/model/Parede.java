@@ -14,7 +14,6 @@ public class Parede extends Iteravel implements Celula {
 		this.painelPrincipal = painelPrincipal;
 		this.nomeImagem = "/imagens/parede - Copy.png";
 	}
-
 	public CellRepresentation getCellRepresentation() {
 		return new SingleImageCellRepresentation(nomeImagem);
 	}
