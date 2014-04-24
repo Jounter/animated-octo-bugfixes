@@ -21,7 +21,7 @@ public class JanelaCradle extends JFrame {
 	private JLabel lblPontuacao;
 	private GridPanel gridPainelPrincipal;
 	private GridPanel gridPainelBonus;
-	private JPanel jPanePainelVida;
+	private GridPanel gridPainelVida;
 	private Thread novaThread;
 	private Jogo jogo;
 
@@ -94,22 +94,15 @@ public class JanelaCradle extends JFrame {
 		contentPane.add(gridPainelBonus, BorderLayout.SOUTH);
 		
 		//PainelVida
-		jPanePainelVida = new JPanel() {
-			protected void paintComponent(java.awt.Graphics g) {
-				super.paintComponent(g);
-				try {
-					g.drawImage(ImageIO.read(JanelaCradle.class
-							.getResource("/imagens/vida_"+ jogo.atualizarVida() +".png")), 0, 0, this);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-		jPanePainelVida.setPreferredSize(new Dimension(200, 10));
-		jPanePainelVida.setOpaque(false);
-		contentPane.add(jPanePainelVida, BorderLayout.EAST);
+		gridPainelVida = new GridPanel();
+		gridPainelVida.setRows(1);
+		gridPainelVida.setRowSize(300);
+		gridPainelVida.setColumnSize(150);
+		gridPainelVida.setShowGridLines(false);
+		gridPainelVida.setColumns(1);
+		contentPane.add(gridPainelVida, BorderLayout.EAST);
 
-		jogo = new Jogo(gridPainelPrincipal, gridPainelBonus, jPanePainelVida);
+		jogo = new Jogo(gridPainelPrincipal, gridPainelBonus, gridPainelVida);
 
 		novaThread = new Thread() {
 			public void run() {
@@ -119,7 +112,7 @@ public class JanelaCradle extends JFrame {
 						sleep(1000);
 						gridPainelPrincipal.repaint();
 						gridPainelBonus.repaint();
-						jPanePainelVida.repaint();
+						gridPainelVida.repaint();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

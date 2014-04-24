@@ -1,7 +1,5 @@
 package model;
 
-import javax.swing.JPanel;
-
 import pt.ipleiria.estg.dei.gridpanel.GridPanel;
 
 public class Jogo extends Iteravel {
@@ -11,11 +9,11 @@ public class Jogo extends Iteravel {
 	private PainelVida painelVida;
 	
 	public Jogo(GridPanel gridPainelPrincipal, GridPanel gridPainelBonus,
-			JPanel jPanePainelVida) {
+			GridPanel gridPainelVida) {
 		super();
 		painelPrincipal = new PainelPrincipal(gridPainelPrincipal, this);
 		painelBonus = new PainelBonus(gridPainelBonus, this);
-		painelVida = new PainelVida(jPanePainelVida, this);
+		painelVida = new PainelVida(gridPainelVida, this);
 	}
 
 	public void iterar() {

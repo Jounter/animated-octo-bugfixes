@@ -1,21 +1,24 @@
 package model;
 
+import java.util.LinkedList;
+
 import pt.ipleiria.estg.dei.gridpanel.GridPanel;
 import pt.ipleiria.estg.dei.utils.FileHandler;
 
 public class PainelPrincipal extends Iteravel {
-	private Grelha[][] grelha;
+	private Celula[][] grelha;
 	private Jogo jogo;
 	private GridPanel gridPanel;
-//	private Elemento[][] elementos;
+	private LinkedList<Bloco> listaBlocos;
 	private static final String BLOCO = "B";
 	private static final String PAREDE = "P";
-	private static final String COFRE = "S";
+	private static final String CORRENTE = "C";
 
 	public PainelPrincipal(GridPanel gridPanel, Jogo jogo) {
 		this.gridPanel = gridPanel;
 		this.jogo = jogo;
-		grelha = new Grelha[18][9];
+		grelha = new Celula[18][9];
+		listaBlocos = new LinkedList<>();
 		
 		carregarFicheiroNivel();
 	}
@@ -31,14 +34,15 @@ public class PainelPrincipal extends Iteravel {
 			colunas = linha.split(" ");
 			for(int x = 0; x < colunas.length; x++){
 				if (colunas[x].substring(0, 1).equals(PAREDE)){
-					adicionarGrelha(new Parede(new Posicao(y, x), this));
+					Parede parede = new Parede(new Posicao(y, x), this);
+					adicionarCelula(parede, x , y);
+					gridPanel.put(x, y, parede.getCellRepresentation());
 				}
 				if (colunas[x].substring(0, 1).equals(BLOCO)){
-					adicionarGrelha(new Bloco(new Posicao(y, x), this, Integer.parseInt(colunas[x].substring(1, 2))));
+					Bloco bloco = new Bloco(new Posicao(y, x), this, Integer.parseInt(colunas[x].substring(1, 2)));
+					adicionarCelula(bloco, x , y);
+					listaBlocos.add(bloco);
 					switch (Integer.parseInt(colunas[x].substring(2, 3).intern())) {
-					case 0:
-						pintar(grelha[x][y]);
-						break;					
 					case 1:
 						adicionarElemento(new Anel(new Posicao(y, x)));
 						break;
@@ -67,10 +71,10 @@ public class PainelPrincipal extends Iteravel {
 						adicionarElemento(new Martelo(new Posicao(y, x)));
 						break;
 					}
-					if(colunas[x].substring(3, 4).equals(COFRE)){
+					if(colunas[x].substring(3, 4).equals(CORRENTE)){
 						((Bloco)grelha[x][y]).getElemento().setCorrente(new Corrente(new Posicao(y, x)));
-						pintar(grelha[x][y]);
 					}
+					atualizar();
 				}
 			}
 			y++;
@@ -80,20 +84,17 @@ public class PainelPrincipal extends Iteravel {
 
 
 	private void adicionarElemento(Elemento elemento) {
-		/////REVER COM PROF/////
 		((Bloco)grelha[elemento.getPosicao().getColuna()][elemento.getPosicao().getLinha()]).setElemento(elemento);
-		pintar(grelha[elemento.getPosicao().getColuna()][elemento.getPosicao().getLinha()]);
 	}
 	
-	private void adicionarGrelha(Grelha eleGrelha) {
-		grelha[eleGrelha.getPosicao().getColuna()][eleGrelha.getPosicao().getLinha()] = eleGrelha;
-		if(grelha[eleGrelha.getPosicao().getColuna()][eleGrelha.getPosicao().getLinha()] instanceof Parede){
-			pintar(eleGrelha);
+	private void adicionarCelula(Celula eleGrelha, int x, int y) {
+		grelha[x][y] = eleGrelha;
+	}
+	
+	private void atualizar() {
+		for (Bloco bloco : listaBlocos) {
+			gridPanel.put(bloco.getPosicao().getColuna(), bloco.getPosicao().getLinha(), bloco.getCellRepresentation());
 		}
-	}
-	
-	private void pintar(Grelha eleGrelha) {
-		gridPanel.put(eleGrelha.getPosicao().getColuna(), eleGrelha.getPosicao().getLinha(), eleGrelha.getCellRepresentation());
 	}
 
 	public void iterar() {

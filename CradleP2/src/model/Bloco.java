@@ -6,7 +6,9 @@ import pt.ipleiria.estg.dei.gridpanel.CellRepresentation;
 import pt.ipleiria.estg.dei.gridpanel.OverlayCellRepresentation;
 import pt.ipleiria.estg.dei.gridpanel.SingleImageCellRepresentation;
 
-public class Bloco extends Grelha {
+public class Bloco extends Iteravel implements Celula {
+	private Posicao posicao;
+	private PainelPrincipal painelPrincipal;
 	private int resistencia;
 	private String nomeImagem;
 	private Elemento elemento;
@@ -15,7 +17,9 @@ public class Bloco extends Grelha {
 	
 	public Bloco(Posicao posicao, PainelPrincipal painelPrincipal,
 			int resistencia) {
-		super(posicao, painelPrincipal, "/imagens/bloco0.png");
+		this.posicao = posicao;
+		this.painelPrincipal = painelPrincipal;
+		this.nomeImagem = nomeImagem;
 		if (resistencia == 0) {
 			nomeImagem = "/imagens/bloco0.png";
 		} else if (resistencia == 1) {
@@ -35,8 +39,11 @@ public class Bloco extends Grelha {
 		}
 
 	}
-
-	@Override
+	
+	public Posicao getPosicao() {
+		return posicao;
+	}
+	
 	public CellRepresentation getCellRepresentation() {
 		if (elemento != null)
 			return new OverlayCellRepresentation(new SingleImageCellRepresentation(nomeImagem), elemento.getRepresentacaoVisual());

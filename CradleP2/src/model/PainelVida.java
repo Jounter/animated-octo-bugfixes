@@ -1,12 +1,13 @@
 package model;
 
 
-import javax.swing.JPanel;
+import pt.ipleiria.estg.dei.gridpanel.GridPanel;
 
 
 public class PainelVida extends Iteravel {
-	private JPanel jPanel;
+	private GridPanel gridPanel;
 	private Jogo jogo;
+	private Vida vida;
 	private int nivelVida;
 	
 	
@@ -20,11 +21,17 @@ public class PainelVida extends Iteravel {
 //			"/imagens/vida_18.png", "/imagens/vida_19.png", "/imagens/vida_20.png");
 //}
 
-	public PainelVida(JPanel jPanel, Jogo jogo) {
-		this.jPanel = jPanel;
+	public PainelVida(GridPanel gridPanel, Jogo jogo) {
+		this.gridPanel = gridPanel;
 		this.jogo = jogo;
 		nivelVida = 20;
+		vida = new Vida();
+		apresentarVida();
 }
+	
+	private void apresentarVida() {
+		gridPanel.put(0, 0, vida.getCellRepresentation());
+	}
 	
 	public int getNivelVida(){
 		if(nivelVida > 0){
